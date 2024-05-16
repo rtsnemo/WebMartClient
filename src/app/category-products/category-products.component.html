@@ -8,6 +8,8 @@
           <p class="card-text">{{ product.description }}</p>
           <p class="card-text">Цена: {{ product.price }}</p>
           <p class="card-text">В наличии: {{ product.quantityInStock }}</p>
+          <!-- Добавляем кнопку для перехода к товару -->
+          <a [routerLink]="['/products', product.productID]" class="btn btn-primary">Подробнее</a>
         </div>
       </div>
     </div>
