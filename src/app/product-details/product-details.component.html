@@ -23,11 +23,11 @@
 
         <div class="mb-4">
           <button class="btn btn-primary btn-lg mr-2">Купить сейчас</button>
-          <button class="btn btn-outline-secondary btn-lg">Добавить в корзину</button>
+          <button class="btn btn-outline-secondary btn-lg" (click)="addItemToCart(product)">Добавить в корзину</button>
         </div>
 
         <div class="mt-3">
-          <a [routerLink]="['/category', product.category.categoryID]" class="btn btn-link">Вернуться к категории</a>
+          <a [routerLink]="['/category/', product.category.categoryID]" class="btn btn-link">Вернуться к категории</a>
         </div>
       </div>
     </div>
