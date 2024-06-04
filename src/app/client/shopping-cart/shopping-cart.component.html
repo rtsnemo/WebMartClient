@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <h2>Ваша корзина</h2>
+
+  <ng-container *ngIf="cartItems$ | async as cartItems; else loading">
+    <div *ngIf="!cartItems.length">
+      <p>Корзина пуста.</p>
+    </div>
+
+    <div *ngIf="cartItems.length">
+      <div class="list-group">
+        <div *ngFor="let item of cartItems" class="list-group-item">
+          <div class="d-flex justify-content-between align-items-center">
+            <h5 class="mb-1">{{ item.product?.name }}</h5>
+            <span>{{ item.price | currency }}</span>
+          </div>
+          <p class="mb-1">Количество: {{ item.quantity }}</p>
+          <button type="button" class="btn btn-danger btn-sm" (click)="removeItem(item)">Удалить</button>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <strong>Итого: {{ getTotal(cartItems) | currency }}</strong>
+      </div>
+
+      <button class="btn btn-secondary mt-3" (click)="clearCart()">Очистить корзину</button>
+      <button class="btn btn-primary mt-3" (click)="proceedToCheckout()">Перейти до оплаты</button>
+    </div>
+  </ng-container>
+
+  <ng-template #loading>
+    <p>Загрузка...</p>
+  </ng-template>
+</div>

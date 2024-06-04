@@ -1,0 +1,92 @@
+<div class="container mt-5" *ngIf="product$ | async as product">
+  <div class="row">
+    <!-- Изображение товара -->
+    <div class="col-md-6 mb-4 d-flex justify-content-center align-items-center">
+      <img [src]="product.urlImage" class="img-fluid rounded w-50" alt="{{ product.name }}">
+    </div>
+
+    <!-- Детали товара -->
+    <div class="col-md-6">
+      <h2>{{ product.name }}</h2>
+      <p class="lead">{{ product.description }}</p>
+      <p><strong>Цена:</strong> {{ product.price | currency:'USD' }}</p>
+      <p><strong>В наличии:</strong> {{ product.quantityInStock }}</p>
+
+      <div class="mt-4">
+        <button class="btn btn-primary btn-lg mr-2">Купить сейчас</button>
+        <button class="btn btn-outline-secondary btn-lg" (click)="addItemToCart(product)">Добавить в корзину</button>
+      </div>
+
+      <div class="mt-4">
+        <a [routerLink]="['/category/', product.category.categoryID]" class="btn btn-link">Вернуться к категории</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Дополнительная информация о товаре -->
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Описание товара</h3>
+          <p class="card-text">{{ product.description }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Дополнительная информация о товаре -->
+  <div class="row mt-5">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h3 class="card-title">Дополнительная информация</h3>
+          <p class="card-text">{{ product.additionalInfo }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Отзывы -->
+<div class="row mt-5" *ngIf="(product$ | async) as product; else loading">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h3>Отзывы</h3>
+
+        <!-- Существующие отзывы -->
+<!-- Модифицированный код для стилизации отзывов -->
+<div *ngFor="let review of (reviews$ | async)">
+  <div class="card mb-3">
+    <div class="card-body">
+      <div class="media">
+        <div *ngIf="review.user.profileImage" class="mr-3">
+          <img [src]="review.user.profileImage.base64Data" class="rounded-circle" width="50" height="50" alt="{{ review.user.name }}">
+        </div>
+        <div *ngIf="!review.user.profileImage" class="d-flex justify-content-center align-items-center rounded-circle bg-secondary text-light mr-3" style="width: 50px; height: 50px;">
+          <i class="fas fa-user fa-lg text-light"></i>
+        </div>
+        <div class="media-body mt-2">
+          <h5 class="mt-0">{{ review.user.name }}</h5>
+          <p class="mb-0">{{ review.comment }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <!-- Форма для добавления отзыва -->
+        <form (ngSubmit)="submitReview()" #reviewForm="ngForm">
+          <div class="mb-3">
+            <label for="comment" class="form-label">Ваш отзыв</label>
+            <textarea id="comment" class="form-control" required [(ngModel)]="newReview.comment" name="comment"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" [disabled]="reviewForm.invalid">Добавить отзыв</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #loading>Loading...</ng-template>

@@ -1,0 +1,104 @@
+<div class="container mt-4">
+  <div class="row mb-4">
+    <div class="col-12 text">
+      <button class="btn btn-primary mb-4" (click)="toggleAddProductPanel()">
+        {{ showAddProductPanel ? 'Скрыть панель добавления продукта' : 'Добавить продукт' }}
+      </button>
+    </div>
+  </div>
+  <div *ngIf="showAddProductPanel" class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4>Добавить новый продукт</h4>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="addProduct()">
+            <div class="mb-3">
+              <label for="newProductName" class="form-label">Название:</label>
+              <input type="text" class="form-control" id="newProductName" [(ngModel)]="newProduct.name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="newProductImage" class="form-label">Изображение:</label>
+              <input type="file" class="form-control" id="newProductImage" (change)="onNewProductFileSelected($event)" accept="image/*" required>
+            </div>
+            <div class="mb-3">
+              <label for="newProductPrice" class="form-label">Цена:</label>
+              <input type="number" class="form-control" id="newProductPrice" [(ngModel)]="newProduct.price" name="price" required>
+            </div>
+            <div class="mb-3">
+              <label for="newProductQuantity" class="form-label">Количество:</label>
+              <input type="number" class="form-control" id="newProductQuantity" [(ngModel)]="newProduct.quantityInStock" name="quantityInStock" required>
+            </div>
+            <div class="mb-3">
+              <label for="newProductCategory" class="form-label">Категория:</label>
+              <select class="form-control" id="newProductCategory" [(ngModel)]="newProduct.categoryId" name="categoryId" required>
+                <option *ngFor="let category of categories" [value]="category.categoryID">{{ category.name }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="newProductDescription" class="form-label">Опис:</label>
+              <input type="text" class="form-control" id="newProductDescription" [(ngModel)]="newProduct.description" name="description" required>
+            </div>
+            <button type="submit" class="btn btn-success">Добавить продукт</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <input type="text" class="form-control" placeholder="Поиск по названию" [(ngModel)]="searchName" (input)="filterProducts()">
+    </div>
+    <div class="col-md-6">
+      <select class="form-control" [(ngModel)]="searchCategory" (change)="filterProducts()">
+        <option value="">Все категории</option>
+        <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Изображение</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Количество</th>
+            <th scope="col">Категория</th>
+            <th scope="col">Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of filteredProducts">
+            <td>
+              <input type="text" [(ngModel)]="product.name" class="form-control">
+            </td>
+            <td>
+              <img [src]="product.urlImage" alt="{{ product.name }}" class="img-thumbnail" style="max-width: 100px;">
+              <div class="mt-2">
+                <input type="file" (change)="onFileSelected($event, product)" accept="image/*">
+              </div>
+            </td>
+            <td>
+              <input type="number" [(ngModel)]="product.price" class="form-control">
+            </td>
+            <td>
+              <input type="number" [(ngModel)]="product.quantityInStock" class="form-control">
+            </td>
+            <td>
+              <select class="form-control" [(ngModel)]="product.category.name">
+                <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+              </select>
+            </td>
+            <td class="d-line">
+                <button class="btn btn-warning btn-sm mr-2 mx-auto" (click)="onUpdateProduct(product)">Редактировать</button>
+                <button class="btn btn-danger btn-sm mx-auto mt-2" (click)="deleteProduct(product.productID)">Удалить</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

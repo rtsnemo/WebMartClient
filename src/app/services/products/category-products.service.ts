@@ -18,4 +18,20 @@ export class CategoryProductsService {
   getProductById(productId: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/products/${productId}`);
   }
+
+  getProducts(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl);
+  }
+
+  addProduct(product: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/create-product`, product);
+  }
+
+  updateProduct(product: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${product.productID}`, product);
+  }
+
+  deleteProduct(productId: number): Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}/${productId}`);
+  }
 }

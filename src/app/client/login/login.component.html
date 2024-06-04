@@ -1,0 +1,14 @@
+<div class="container mt-5">
+  <h2>Вход</h2>
+  <form (ngSubmit)="login()">
+    <div class="mb-3">
+      <label for="email" class="form-label">Почта</label>
+      <input type="text" class="form-control" id="email" [(ngModel)]="credentials.email" name="email" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Пароль</label>
+      <input type="password" class="form-control" id="password" [(ngModel)]="credentials.password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Войти</button>
+  </form>
+</div>

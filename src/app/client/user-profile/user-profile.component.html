@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h2 class="text-center">{{ user?.name }}'s Profile</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4">
+              <img [src]="user.profileImage.base64Data" alt="Profile Image" class="img-fluid rounded-circle" style="width: 150px; height: 150px;">
+            </div>
+            <div class="col-md-8">
+              <div class="profile-info">
+                <p><strong>Email:</strong> {{ user?.email }}</p>
+                <p><strong>Role:</strong> {{ user?.role }}</p>
+                <p><strong>Balance:</strong> {{ user?.balance | currency }}</p>
+                <p><strong>Number of Reviews:</strong> {{ user?.reviews?.length }}</p>
+                <p><strong>Number of Orders:</strong> {{ user?.orders?.length }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

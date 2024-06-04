@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <button class="btn btn-primary mb-4" (click)="toggleAddCategoryPanel()">
+        {{ showAddCategoryPanel ? 'Скрыть' : 'Добавить категорию' }}
+      </button>
+      <div *ngIf="showAddCategoryPanel" class="card mb-4">
+        <div class="card-header">
+          <h4>Добавить новую категорию</h4>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="addCategory()">
+            <div class="mb-3">
+              <label for="newCategoryName" class="form-label">Название категории:</label>
+              <input type="text" class="form-control" id="newCategoryName" [(ngModel)]="newCategory.name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="newCategoryImage" class="form-label">Изображение категории:</label>
+              <input type="file" class="form-control" id="newCategoryImage" (change)="onNewCategoryFileSelected($event)" accept="image/*" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить категорию</button>
+          </form>
+        </div>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Название</th>
+            <th scope="col">Изображение</th>
+            <th scope="col">Действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td>
+              <input type="text" [(ngModel)]="category.name" class="form-control">
+            </td>
+            <td>
+              <img [src]="category.urlImage" alt="{{ category.name }}" class="img-thumbnail" style="max-width: 100px;">
+              <div class="mt-2">
+                <input type="file" (change)="onFileSelected($event, category)" accept="image/*">
+              </div>
+            </td>
+            <td class="d-line">
+                <button class="btn btn-warning btn-sm mr-2 mx-2" (click)="onUpdateCategory(category)">Редактировать</button>
+                <button class="btn btn-danger btn-sm mx-2 mt-2" (click)="deleteCategory(category.categoryID)">Удалить</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

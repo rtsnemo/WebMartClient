@@ -1,0 +1,46 @@
+<div class="container mt-5">
+  <h2>Оформление заказа</h2>
+
+  <div *ngIf="cartItems.length === 0">
+    <p>Корзина пуста.</p>
+  </div>
+
+  <div *ngIf="cartItems.length > 0">
+    <div class="list-group">
+      <div *ngFor="let item of cartItems" class="list-group-item">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <img [src]="item.product?.urlImage" alt="{{ item.product?.name }}" class="img-thumbnail me-3" style="width: 50px; height: 50px;">
+            <h5 class="mb-1">{{ item.product?.name }}</h5>
+          </div>
+          <span>{{ item.price | currency }}</span>
+        </div>
+        <p class="mb-1">Количество: {{ item.quantity }}</p>
+      </div>
+    </div>
+
+    <div class="mt-3">
+      <strong>Итого: {{ getTotal() | currency }}</strong>
+    </div>
+
+    <form (ngSubmit)="submitOrder()">
+      <div class="form-group">
+        <label for="name">Имя</label>
+        <input type="text" class="form-control" id="name" [(ngModel)]="customer.name" name="name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" [(ngModel)]="customer.email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Номер телефона:</label>
+        <input type="tel" class="form-control" id="phoneNumber" [(ngModel)]="customer.phoneNumber" name="phoneNumber" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Имя</label>
+        <input type="text" class="form-control" id="address" [(ngModel)]="customer.address" name="address" required>
+      </div>
+      <button type="submit" class="btn btn-success mt-3">Подтвердить заказ</button>
+    </form>
+  </div>
+</div>
